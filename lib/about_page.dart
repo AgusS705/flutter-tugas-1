@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_first_app/data.dart';
 
 Color kPrimaryColor = Color(0xffFFCC24);
+AssetImage kLogo = AssetImage('assets/images/logo.png');
 List<Person> listPerson = getPersonList();
 
 class AboutPage extends StatefulWidget {
@@ -14,66 +15,98 @@ class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      appBar: AppBar(
+        backgroundColor: kPrimaryColor,
+        elevation: 0,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "SDGs 7",
+              style: TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            GestureDetector(
+                child: Text(
+              'Afforfable and Clean Energy',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.black54,
+              ),
+            ))
+          ],
+        ),
+        centerTitle: false,
+        actions: <Widget>[
+          Container(
+            margin: EdgeInsets.only(
+              right: 16,
+              top: 8,
+            ),
+            width: 50,
+            child: CircleAvatar(
+              backgroundImage: kLogo,
+            ),
+          ),
+        ],
+      ),
+      body: Stack(
         children: <Widget>[
-          Stack(
-            overflow: Overflow.visible,
-            children: <Widget>[
-              Container(
+          Positioned(
+              top: 0,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
                 height: 210,
                 color: kPrimaryColor,
-                child: Padding(
-                    padding: EdgeInsets.only(
-                        top: 30, bottom: 30, right: 23, left: 23),
-                    child: Column(
+                padding: EdgeInsets.only(top: 20, right: 23, left: 23),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.only(right: 16),
-                              child: Image(
-                                image: AssetImage('assets/images/logo.png'),
-                                width: 71,
-                              ),
-                            ),
-                            Container(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    'SDGs 7',
-                                    style: TextStyle(
-                                        fontSize: 23,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    'Afforfable and Clean Energy',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.normal),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
+                        Container(
+                          margin: EdgeInsets.only(right: 16),
+                          child: Image(
+                            image: AssetImage('assets/images/logo.png'),
+                            width: 71,
+                          ),
                         ),
+                        Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                'SDGs 7',
+                                style: TextStyle(
+                                    fontSize: 23, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                'Afforfable and Clean Energy',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal),
+                              )
+                            ],
+                          ),
+                        )
                       ],
-                    )),
-              ),
-              Positioned(
-                  top: 130,
-                  left: 16,
-                  right: 16,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: buildPersonList(),
-                  ))
-            ],
-          )
+                    ),
+                  ],
+                ),
+              )),
+          Positioned(
+              top: 120,
+              left: 16,
+              right: 16,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: buildPersonList(),
+              )),
         ],
       ),
     );
@@ -104,11 +137,16 @@ Widget buildPerson(Person person) {
     child: Row(
       children: <Widget>[
         Container(
-          child: Image(
-              width: 144,
-              image: AssetImage(
-                person.photo,
-              )),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20))),
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20)),
+            child: Image(
+                width: 144,
+                image: AssetImage(
+                  person.photo,
+                )),
+          ),
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
